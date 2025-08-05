@@ -1,0 +1,42 @@
+default: precommit
+
+# Install dependencies
+install:
+    uv sync
+
+# Run linters
+lint:
+    uv run ruff check .
+
+# Run tests
+test:
+    uv run pytest
+
+# Run formatters
+format:
+    uv run tidy-imports --quiet --replace **/*.py
+    uv run ruff check --fix .
+    uv run ruff format .
+
+# Generate documentation
+docs:
+    uv run pdoc3 --html --output-dir docs .
+
+# Run type checkers
+types:
+    uv run pyright
+
+# Clean up generated files
+clean:
+    rm -rf .pytest_cache docs
+
+# Run all pre-commit checks
+precommit: clean install format types test docs
+
+alias l := lint
+alias t := test
+alias f := format
+alias d := docs
+alias ty := types
+alias c := clean
+alias pre := precommit
