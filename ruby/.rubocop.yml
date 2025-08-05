@@ -1,0 +1,9 @@
+plugins:
+  - rubocop-rake
+  - rubocop-minitest
+
+AllCops:
+  NewCops: enable
+
+Layout/LineLength:
+  Max: 80

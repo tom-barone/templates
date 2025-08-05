@@ -1,0 +1,42 @@
+default: precommit
+
+# Install dependencies
+install:
+    bundle install
+
+# Run linters
+lint:
+    bundle exec rubocop --autocorrect-all --fail-level I
+
+# Run tests
+test:
+    bundle exec ruby -Ilib:test -e "Dir['test/**/*_test.rb'].each { |f| require File.expand_path(f) }"
+
+# Run formatters
+format:
+    bundle exec rubocop --fix-layout --autocorrect-all
+
+# Generate documentation
+docs:
+    bundle exec rdoc lib README.md --main README.md --output doc
+
+# Run type checkers
+types:
+    bundle exec steep check
+
+# Clean up generated files
+clean:
+    rm -rf doc
+    rm -rf coverage
+
+# Run all pre-commit checks
+precommit: clean install format types test docs
+
+alias l := lint
+alias t := test
+alias f := format
+alias d := docs
+alias ty := types
+alias c := clean
+alias pre := precommit
+
