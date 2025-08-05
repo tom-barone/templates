@@ -6,7 +6,7 @@ install:
 
 # Run linters
 lint:
-    uv run ruff check .
+    uv run ruff check --fix .
 
 # Run tests
 test:
@@ -15,7 +15,6 @@ test:
 # Run formatters
 format:
     uv run tidy-imports --quiet --replace **/*.py
-    uv run ruff check --fix .
     uv run ruff format .
 
 # Generate documentation
